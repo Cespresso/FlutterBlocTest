@@ -42,6 +42,7 @@ Widget _buildScrollWidget(List<Todo> todos) {
         expandedHeight: 250.0,
         pinned: true,
         flexibleSpace: FlexibleSpaceBar(
+          centerTitle: true,
           title: Text("TODO"),
         ),
       ),
@@ -87,7 +88,7 @@ class _ListTodoPage extends State<ListTodoPage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.of(context).pushNamed("/add");
+          Navigator.of(context).pushNamed("/todo/add");
         },
         label: Text("Add Task"),
         icon: Icon(Icons.add),
