@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_test/dart/todo_bloc.dart';
 import 'package:flutter_bloc_test/dart/todo_bloc_provider.dart';
+import 'package:flutter_bloc_test/data/todo.dart';
 
 class ListTodoPage extends StatefulWidget {
   @override
@@ -34,6 +35,31 @@ Widget _makeAddBottomSheet() {
   );
 }
 
+Widget _buildScrollWidget(List<Todo> todos) {
+  return CustomScrollView(
+    slivers: <Widget>[
+      SliverAppBar(
+        expandedHeight: 250.0,
+        pinned: true,
+        flexibleSpace: FlexibleSpaceBar(
+          title: Text("TODO"),
+        ),
+      ),
+      SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            return ListTile(
+              title: Text(todos[index].title),
+              onTap: (){/* TODO 詳細画面への遷移を追加*/},
+            );
+          },
+          childCount: todos.length,
+        ),
+      )
+    ],
+  );
+}
+
 class _ListTodoPage extends State<ListTodoPage> {
   @override
   Widget build(BuildContext context) {
@@ -42,18 +68,17 @@ class _ListTodoPage extends State<ListTodoPage> {
       body: StreamBuilder(
           stream: bloc.todos,
           initialData: bloc.todos.value,
-          builder: (BuildContext context, AsyncSnapshot snap) {
-            if (snap.connectionState == ConnectionState.done) {
-              if (snap.hasError) {
-                return Center(
-                  child: Text("エラーです"),
-                );
-              }
-              return Center(
-                child: Text(
-                  snap.data.toString(),
-                ),
-              );
+          builder: (BuildContext context, AsyncSnapshot<List<Todo>> snap) {
+//            if (snap.connectionState == ConnectionState.done) {
+////              if (snap.hasError) {
+////                return Center(
+////                  child: Text("エラーです"),
+////                );
+////              }
+//
+//            }
+            if(snap.hasData){
+              return _buildScrollWidget(snap.data);
             }
             return Center(
               child: CircularProgressIndicator(),
