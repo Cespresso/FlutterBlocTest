@@ -35,7 +35,7 @@ Widget _makeAddBottomSheet() {
   );
 }
 
-Widget _buildScrollWidget(List<Todo> todos) {
+Widget _buildScrollWidget(TodoBloc bloc,List<Todo> todos) {
   return CustomScrollView(
     slivers: <Widget>[
       SliverAppBar(
@@ -49,9 +49,24 @@ Widget _buildScrollWidget(List<Todo> todos) {
       SliverList(
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
+            Todo todo = todos[index];
+            if(todo.isCompleted){
+              return ListTile(
+                leading: Icon(Icons.check_box),
+                title: Text(todo.title),
+                onTap: (){
+                  todo.isCompleted = false;
+                  bloc.todoEdit.add(todo);
+                },
+              );
+            }
             return ListTile(
-              title: Text(todos[index].title),
-              onTap: (){/* TODO 詳細画面への遷移を追加*/},
+              leading: Icon(Icons.check_box_outline_blank),
+              title: Text(todo.title),
+              onTap: (){
+                todo.isCompleted = true;
+                bloc.todoEdit.add(todo);
+              },
             );
           },
           childCount: todos.length,
@@ -79,7 +94,7 @@ class _ListTodoPage extends State<ListTodoPage> {
 //
 //            }
             if(snap.hasData){
-              return _buildScrollWidget(snap.data);
+              return _buildScrollWidget(bloc,snap.data);
             }
             return Center(
               child: CircularProgressIndicator(),
