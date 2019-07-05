@@ -28,7 +28,7 @@ class _InputTodoWidget extends State<InputTodoWidget>{
     return TextFormField(
       initialValue: initTitle,
       decoration: InputDecoration(
-        labelText: "Produce Title",
+        labelText: "タイトル",
       ),
       validator: (String text) {
         // TODO バリデーション
@@ -43,7 +43,7 @@ class _InputTodoWidget extends State<InputTodoWidget>{
     return TextFormField(
       initialValue: initBody,
       decoration: InputDecoration(
-        labelText: "Produce Description",
+        labelText: "本文",
       ),
       maxLines: 4,
       validator: (String text) {
