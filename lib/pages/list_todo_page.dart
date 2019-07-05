@@ -36,7 +36,10 @@ Widget _makeAddBottomSheet() {
 }
 
 Widget _buildScrollWidget(TodoBloc bloc, List<Todo> todos) {
-  int remainTodoCount = todos.where((item)=>item.isCompleted == false).toList().length;
+  int remainTodoCount = todos
+      .where((item) => item.isCompleted == false)
+      .toList()
+      .length;
   return CustomScrollView(
     slivers: <Widget>[
       SliverAppBar(
@@ -51,27 +54,48 @@ Widget _buildScrollWidget(TodoBloc bloc, List<Todo> todos) {
       ),
       SliverList(
         delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
+              (BuildContext context, int index) {
             Todo todo = todos[index];
             return ListTile(
               leading: todo.isCompleted
                   ? IconButton(
-                      icon: Icon(Icons.check_box),
-                      onPressed: () {
-                        todo.isCompleted = false;
-                        bloc.todoEdit.add(todo);
-                      })
+                  icon: Icon(Icons.check_box),
+                  onPressed: () {
+                    todo.isCompleted = false;
+                    bloc.todoEdit.add(todo);
+                  })
                   : IconButton(
-                      icon: Icon(Icons.check_box_outline_blank),
-                      onPressed: () {
-                        todo.isCompleted = true;
-                        bloc.todoEdit.add(todo);
-                      }),
-              title: FlatButton(
-                onPressed: () {
+                  icon: Icon(Icons.check_box_outline_blank),
+                  onPressed: () {
+                    todo.isCompleted = true;
+                    bloc.todoEdit.add(todo);
+                  }),
+              title: GestureDetector(
+                onTap: () {
                   // 編集画面への遷移
                   Navigator.of(context)
                       .pushNamed("/todo/edit/" + todo.id.toString());
+                },
+                onLongPress: () {
+                  showDialog(context: context, builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("削除"),
+                      content: Text(todo.title.toString() + " を削除しますか？"),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text("Cancel"),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                        FlatButton(
+                          child: Text("OK"),
+                          onPressed: () {
+                            bloc.todoRemoval.add(todo);
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    );
+                  });
                 },
                 child: SizedBox(
                   width: double.infinity,
