@@ -35,7 +35,7 @@ Widget _makeAddBottomSheet() {
   );
 }
 
-Widget _buildScrollWidget(TodoBloc bloc,List<Todo> todos) {
+Widget _buildScrollWidget(TodoBloc bloc, List<Todo> todos) {
   return CustomScrollView(
     slivers: <Widget>[
       SliverAppBar(
@@ -50,23 +50,47 @@ Widget _buildScrollWidget(TodoBloc bloc,List<Todo> todos) {
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             Todo todo = todos[index];
-            if(todo.isCompleted){
+            if (todo.isCompleted) {
               return ListTile(
-                leading: Icon(Icons.check_box),
-                title: Text(todo.title),
-                onTap: (){
-                  todo.isCompleted = false;
-                  bloc.todoEdit.add(todo);
-                },
+                leading: IconButton(
+                    icon: Icon(Icons.check_box),
+                    onPressed: () {
+                      todo.isCompleted = false;
+                      bloc.todoEdit.add(todo);
+                    }),
+                title: FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed("/todo/edit/"+todo.id.toString());
+                  },
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      todo.title,
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                ),
               );
             }
             return ListTile(
-              leading: Icon(Icons.check_box_outline_blank),
-              title: Text(todo.title),
-              onTap: (){
-                todo.isCompleted = true;
-                bloc.todoEdit.add(todo);
-              },
+              leading: IconButton(
+                  icon: Icon(Icons.check_box_outline_blank),
+                  onPressed: () {
+                    todo.isCompleted = true;
+                    bloc.todoEdit.add(todo);
+                  }),
+              title: FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed("/todo/edit/"+todo.id.toString());
+                },
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    todo.title,
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+              ),
             );
           },
           childCount: todos.length,
@@ -93,8 +117,8 @@ class _ListTodoPage extends State<ListTodoPage> {
 ////              }
 //
 //            }
-            if(snap.hasData){
-              return _buildScrollWidget(bloc,snap.data);
+            if (snap.hasData) {
+              return _buildScrollWidget(bloc, snap.data);
             }
             return Center(
               child: CircularProgressIndicator(),
