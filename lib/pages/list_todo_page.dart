@@ -36,6 +36,7 @@ Widget _makeAddBottomSheet() {
 }
 
 Widget _buildScrollWidget(TodoBloc bloc, List<Todo> todos) {
+  int remainTodoCount = todos.where((item)=>item.isCompleted == false).toList().length;
   return CustomScrollView(
     slivers: <Widget>[
       SliverAppBar(
@@ -43,7 +44,9 @@ Widget _buildScrollWidget(TodoBloc bloc, List<Todo> todos) {
         pinned: true,
         flexibleSpace: FlexibleSpaceBar(
           centerTitle: true,
-          title: Text("TODO"),
+          title: (remainTodoCount == 0)
+              ? Text("残りのタスクはありません")
+              : Text("残りタスク" + remainTodoCount.toString()),
         ),
       ),
       SliverList(
@@ -96,14 +99,6 @@ class _ListTodoPage extends State<ListTodoPage> {
           stream: bloc.todos,
           initialData: bloc.todos.value,
           builder: (BuildContext context, AsyncSnapshot<List<Todo>> snap) {
-//            if (snap.connectionState == ConnectionState.done) {
-////              if (snap.hasError) {
-////                return Center(
-////                  child: Text("エラーです"),
-////                );
-////              }
-//
-//            }
             if (snap.hasData) {
               return _buildScrollWidget(bloc, snap.data);
             }
