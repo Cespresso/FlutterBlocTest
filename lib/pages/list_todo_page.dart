@@ -50,38 +50,25 @@ Widget _buildScrollWidget(TodoBloc bloc, List<Todo> todos) {
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             Todo todo = todos[index];
-            if (todo.isCompleted) {
-              return ListTile(
-                leading: IconButton(
-                    icon: Icon(Icons.check_box),
-                    onPressed: () {
-                      todo.isCompleted = false;
-                      bloc.todoEdit.add(todo);
-                    }),
-                title: FlatButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed("/todo/edit/"+todo.id.toString());
-                  },
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Text(
-                      todo.title,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ),
-              );
-            }
             return ListTile(
-              leading: IconButton(
-                  icon: Icon(Icons.check_box_outline_blank),
-                  onPressed: () {
-                    todo.isCompleted = true;
-                    bloc.todoEdit.add(todo);
-                  }),
+              leading: todo.isCompleted
+                  ? IconButton(
+                      icon: Icon(Icons.check_box),
+                      onPressed: () {
+                        todo.isCompleted = false;
+                        bloc.todoEdit.add(todo);
+                      })
+                  : IconButton(
+                      icon: Icon(Icons.check_box_outline_blank),
+                      onPressed: () {
+                        todo.isCompleted = true;
+                        bloc.todoEdit.add(todo);
+                      }),
               title: FlatButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed("/todo/edit/"+todo.id.toString());
+                  // 編集画面への遷移
+                  Navigator.of(context)
+                      .pushNamed("/todo/edit/" + todo.id.toString());
                 },
                 child: SizedBox(
                   width: double.infinity,
