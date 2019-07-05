@@ -20,7 +20,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _todoBloc = TodoBloc();
-    _todoBloc.todoAddition.add(Todo.genWithUniqueID("テスト", "本体"));
   }
 
   @override
