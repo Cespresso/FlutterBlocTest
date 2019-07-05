@@ -1,16 +1,9 @@
 # flutter_bloc_test
 
-Flutter Bloc Test
+Bloc勉強用に実装したTodo
+※永続化処理が入っていないのでアプリがキルされたらデータが飛びます
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+<img src="https://user-images.githubusercontent.com/13589160/60701281-381d3780-9f36-11e9-8641-4fbe172a1a45.png" width="240px">
+<img src="https://user-images.githubusercontent.com/13589160/60701280-381d3780-9f36-11e9-928c-96e85bb30033.png" width="240px">
+<img src="https://user-images.githubusercontent.com/13589160/60701399-9fd38280-9f36-11e9-8b0c-98e37c5ba29b.png" width="240px">
+<img src="https://user-images.githubusercontent.com/13589160/60701391-934f2a00-9f36-11e9-8681-fe25b16a67bb.png" width="240px">
